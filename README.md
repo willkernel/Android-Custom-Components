@@ -229,7 +229,7 @@ For custom components, I had not been systematic studying it , this repository w
 
 ###复合控件的例子
 
-在附带的SDK API的演示项目中，有两个例子列表 - 示例4和示例6  Views/Lists/ 展示了一个SpeechView继承自LinearLayout以显示语音引号中的。示例代码对应的类是List4.java和List6.java。
+在附带的SDK API的演示项目中，有两个例子列表 - 示例4和示例6  Views/Lists/ 展示了一个SpeechView继承自LinearLayout以显示语音。示例代码对应的类是List4.java和List6.java。
 
 
 ###修改已经存在的View类型
