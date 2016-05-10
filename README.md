@@ -240,5 +240,5 @@ For custom components, I had not been systematic studying it , this repository w
 如果你还没有这样做的话，导入记事本示例到Eclipse（或者只是看看提供的源码）。在[NoteEditor.java](http://www.android-doc.com/resources/samples/NotePad/src/com/example/android/notepad/NoteEditor.html)文件中的MyEditText。
 
 ###此仓库包含的示例程序
-- canvas的用法，自定义属性的用法
+- canvas的用法，自定义属性的用法<br>
 - 粒子效果之雨，学习极客学院的练习
