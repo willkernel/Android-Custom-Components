@@ -183,7 +183,7 @@ For custom components, I had not been systematic studying it , this repository w
   
        <tr>
            <td><code><code><a href="http://www.android-doc.com/reference/android/view/View.html#onWindowVisibilityChanged(int)">onWindowVisibilityChanged(int)</a></code></code></td>
-           <td>当包含view的窗口可见性发送变化时调用.
+           <td>当包含view的窗口可见性发生变化时调用.
            </td>
        </tr>     
        </tbody>
