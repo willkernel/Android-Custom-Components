@@ -3,13 +3,9 @@ For custom components, I had not been systematic studying it , this repository w
 
 [custom-components](http://www.android-doc.com/guide/topics/ui/custom-components.html)
 
- ###java.lang.**Object**
- ### ↳	android.view.**View**
+`public class View extends Object implements Drawable.Callback KeyEvent.Callback AccessibilityEventSource`
 
- ###public class **View** extends Object implements Drawable.Callback KeyEvent.Callback AccessibilityEventSource
-
-
-### Known Direct Subclasses
+###Known Direct Subclasses
 * AnalogClock
 * ImageView
 * KeyboardView
@@ -22,7 +18,7 @@ For custom components, I had not been systematic studying it , this repository w
 * ViewGroup
 * ViewStub
 
-### Known Indirect Subclasses
+###Known Indirect Subclasses
 * AbsListView
 * AbsSeekBar
 * AbsSpinner
@@ -30,6 +26,33 @@ For custom components, I had not been systematic studying it , this repository w
 * AdapterView<T extends Adapter>
 * AdapterViewAnimator
 * AdapterViewFlipper, and 56 others.
+
+`public abstract class ViewGroup extends View implements ViewManager ViewParent`
+
+###Known Direct Subclasses
+* AbsoluteLayout
+* AdapterView<T extends Adapter>
+* DrawerLayout
+* FragmentBreadCrumbs
+* FrameLayout
+* GridLayout
+* LinearLayout
+* PagerTitleStrip
+* RelativeLayout
+* SlidingDrawer
+* SlidingPaneLayout
+* ViewPager
+
+###Known Indirect Subclasses
+* AbsListView
+* AbsSpinner
+* AdapterViewAnimator
+* AdapterViewFlipper
+* AppWidgetHostView
+* CalendarView
+* DatePicker
+* DialerFilter
+* ExpandableListView, and 21 others.
 
 ###基本方法
 下面是一个高度概括，当你开始创建自己的View组件是所需要知道的
