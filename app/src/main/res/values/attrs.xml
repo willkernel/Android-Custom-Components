@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomView">
+        <attr name="radius" format="integer" />
+        <attr name="sweepAng" format="integer" />
+        <attr name="tranSpd" format="integer" />
+        <attr name="circleColor" format="color" />
+    </declare-styleable>
+
+
+    <declare-styleable name="RainView">
+        <attr name="rainColor" format="color" />
+        <attr name="rainNum" format="integer" />
+        <attr name="rainWidth" format="integer" />
+        <attr name="size" format="integer" />
+        <attr name="randColor" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="VolumeView">
+        <attr name="volumeNum" format="integer" />
+        <attr name="itemWidth" format="dimension" />
+        <attr name="musicColor" format="color" />
+        <attr name="randVolumeColor" format="boolean" />
+        <attr name="musicType" format="integer">
+            <enum name="RECT" value="1" />
+            <enum name="MRECT" value="2" />
+            <enum name="MMRECT" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>

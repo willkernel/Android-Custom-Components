@@ -18,15 +18,13 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.willkernel.app.components.utils.LogUtil;
 import com.willkernel.app.components.R;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import com.willkernel.app.components.utils.LogUtil;
 
 
 /**
- * Created by willkernel on 2016/5/10.
+ * Created by willkernel
+ * on 2016/5/10.
  */
 @SuppressWarnings("unused")
 public class CustomView extends View {
@@ -42,7 +40,8 @@ public class CustomView extends View {
     private int circleColor;
     private float radius;
     private float rx = -radius;
-    private ExecutorService es = Executors.newFixedThreadPool(1);
+    private MyThread thread;
+    private boolean running=true;
 
     public CustomView(Context context) {
         super(context);
@@ -76,16 +75,12 @@ public class CustomView extends View {
     protected void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
         LogUtil.show(TAG, "onDraw()", Log.INFO);
-        drawSub(canvas);
-
-        es.execute(new Runnable() {
-            @Override
-            public void run() {
-                logic();
-                postInvalidate();
-            }
-        });
-
+        if (thread == null) {
+            thread = new MyThread();
+            thread.start();
+        } else {
+            drawSub(canvas);
+        }
     }
 
     private void logic() {
@@ -165,7 +160,29 @@ public class CustomView extends View {
     @Override
     protected void onDetachedFromWindow() {
         LogUtil.show(TAG,"onDetachedFromWin");
+        running=false;
         super.onDetachedFromWindow();
     }
 
+    private class MyThread extends Thread{
+        private long workTime;
+        private long delay=50;
+
+        @Override
+        public void run() {
+            while (running) {
+                workTime = System.currentTimeMillis();
+                logic();
+                postInvalidate();
+                workTime = System.currentTimeMillis() - workTime;
+                try {
+                    if (workTime < delay) {
+                        Thread.sleep(delay - workTime);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

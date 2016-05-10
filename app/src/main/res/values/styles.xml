@@ -17,19 +17,4 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <declare-styleable name="CustomView">
-        <attr name="radius" format="integer" />
-        <attr name="sweepAng" format="integer" />
-        <attr name="tranSpd" format="integer" />
-        <attr name="circleColor" format="color" />
-    </declare-styleable>
-
-
-    <declare-styleable name="RainView">
-        <attr name="rainColor" format="color" />
-        <attr name="rainNum" format="integer" />
-        <attr name="rainWidth" format="integer" />
-        <attr name="size" format="integer" />
-        <attr name="randColor" format="boolean" />
-    </declare-styleable>
 </resources>

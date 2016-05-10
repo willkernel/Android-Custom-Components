@@ -7,15 +7,15 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
- * Created by willkernel on 2016/5/10.
+ * Created by willkernel
+ * on 2016/5/10.
  */
+@SuppressWarnings("unused")
 public abstract class BasicView extends View {
-    private ExecutorService es = Executors.newFixedThreadPool(1);
-
+    private boolean running = true;
+    private MyThread thread;
+    protected long delay = 100;
     public BasicView(Context context) {
         super(context);
     }
@@ -36,15 +36,13 @@ public abstract class BasicView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        init();
-        drawSub(canvas);
-        es.execute(new Runnable() {
-            @Override
-            public void run() {
-                logic();
-                postInvalidate();
-            }
-        });
+        if (thread == null) {
+            thread = new MyThread();
+            thread.start();
+        } else {
+            drawSub(canvas);
+        }
+
     }
 
     /**
@@ -52,8 +50,34 @@ public abstract class BasicView extends View {
      */
     protected abstract void init();
 
-    public abstract void drawSub(Canvas canvas) ;
+    public abstract void drawSub(Canvas canvas);
 
-    public abstract void logic() ;
+    public abstract void logic();
 
+    @Override
+    protected void onDetachedFromWindow() {
+        running = false;
+        super.onDetachedFromWindow();
+    }
+
+    private class MyThread extends Thread {
+        private long workTime;
+        @Override
+        public void run() {
+            init();
+            while (running) {
+                workTime = System.currentTimeMillis();
+                logic();
+                postInvalidate();
+                workTime = System.currentTimeMillis() - workTime;
+                try {
+                    if (workTime < delay) {
+                        Thread.sleep(delay - workTime);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

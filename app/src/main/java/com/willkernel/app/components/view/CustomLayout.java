@@ -14,8 +14,8 @@ import android.widget.LinearLayout;
 import com.willkernel.app.components.utils.LogUtil;
 
 /**
- * Created by willkernel on 2016/5/10.
- *
+ * Created by willkernel
+ * on 2016/5/10.
  */
 @SuppressWarnings("unused")
 public class CustomLayout extends LinearLayout {

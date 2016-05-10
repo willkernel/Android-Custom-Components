@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import com.willkernel.app.components.utils.LogUtil;
 
 /**
- * Created by willkernel on 2016/5/10.
- *
+ * Created by willkernel
+ * on 2016/5/10.
  */
 @SuppressWarnings("unused")
 public class CustomViewGroup extends ViewGroup {
