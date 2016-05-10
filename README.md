@@ -244,3 +244,5 @@ For custom components, I had not been systematic studying it , this repository w
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/customview.png)
 - 粒子效果之雨，学习极客学院的练习<br>
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/rain.png)
+- 音量显示<br>
+  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/volume.png)
