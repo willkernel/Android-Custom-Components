@@ -232,7 +232,7 @@ For custom components, I had not been systematic studying it , this repository w
 在附带的SDK API的演示项目中，有两个例子列表 - 示例4和示例6  Views/Lists/ 展示了一个SpeechView继承自LinearLayout以显示语音引号中的。示例代码对应的类是List4.java和List6.java。
 
 
-###修改已经存在的Viwe类型
+###修改已经存在的View类型
 在某些情况下,有一种更轻松的选择来创建很有用的自定义视图。如果已经有非常相似的你想要的组件，您可以简单地继承自该组件，重写你想改变的逻辑。你可以自定义一个完全自定义组件来完成你想要的，但如果用在视图层级中更专业类来开始自定义，你还可以得到很多正是你想要的的逻辑代码。
 
 例如，SDK示例中包含了[NotePad application](http://www.android-doc.com/resources/samples/NotePad/index.html)。这个示例展示了使用Android平台很多方面，其中有一个继承自EditText的View来做内衬记事本。这不是一个完美的例子，这些APIs所做的可能会改变原来的显示，但它确实展示了使用方法。
