@@ -90,7 +90,7 @@ For custom components, I had not been systematic studying it , this repository w
 一旦宽度和高度被计算， setMeasuredDimension(int width, int height)方法必须与计算出的测量结果被调用。如果不这样做将导致抛出异常。
 
 
-###下面是一些该框架的意见呼吁其他标准方法的总结：
+###下面是一些常用的其他方法：
 
 <table border="2" width="85%" align="center" cellpadding="5">
        <thead>
