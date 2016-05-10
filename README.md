@@ -241,4 +241,6 @@ For custom components, I had not been systematic studying it , this repository w
 
 ###此仓库包含的示例程序
 - canvas的用法，自定义属性的用法<br>
-- 粒子效果之雨，学习极客学院的练习
+  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/customview.png)
+- 粒子效果之雨，学习极客学院的练习<br>
+  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/rain.png)
