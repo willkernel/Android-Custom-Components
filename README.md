@@ -55,7 +55,7 @@ For custom components, I had not been systematic studying it , this repository w
 * ExpandableListView, and 21 others.
 
 ###基本方法
-下面是一个高度概括，当你开始创建自己的View组件是所需要知道的
+下面是一个高度概括，当你开始创建自己的View组件时所需要知道的
 
 自定义类继承自View或者其subclass
 重写父类中以"on"前缀的方法，例如 onDraw（），onMeasure（）和onkeydown（）。这和重写Activity和ListActivity的生命周期方法有点类似
