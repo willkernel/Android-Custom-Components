@@ -188,7 +188,8 @@ For custom components, I had not been systematic studying it , this repository w
        </tr>
        
        <tr>
-           <td><code><code><a href="http://www.android-doc.com/reference/android/view/View.html#onWindowVisibilityChanged(int)">ViewConfiguration.get(context).getScaledTouchSlop()</a></code></code></td>
+           <td></td>
+           <td><code><code><a>ViewConfiguration.get(context).getScaledTouchSlop()</a></code></code></td>
            <td>获取当前手机屏幕最小滑动距离，在frameworks/base/core/res/res/values/config.xml文件中.
            </td>
        </tr>
