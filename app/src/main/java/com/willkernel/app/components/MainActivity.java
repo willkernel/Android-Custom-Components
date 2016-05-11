@@ -1,10 +1,12 @@
 package com.willkernel.app.components;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.willkernel.app.components.utils.LogUtil;
@@ -17,12 +19,19 @@ public class MainActivity extends Activity {
     private final String TAG = getClass().getSimpleName();
     private LockView lockView;
     private SharedPreferences sp;
+    private TextView tv;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        setContentView(new CustomView(this));
+        context = MainActivity.this;
+        lockView();
+    }
+
+    private void lockView() {
         sp = getSharedPreferences("password", MODE_PRIVATE);
 
         lockView = (LockView) findViewById(R.id.lockView);

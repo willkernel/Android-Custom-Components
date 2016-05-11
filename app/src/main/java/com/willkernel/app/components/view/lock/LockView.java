@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 
 import com.willkernel.app.components.R;
@@ -36,7 +37,7 @@ public class LockView extends View {
     private ArrayList<Integer> passList = new ArrayList<Integer>();
 
     private onDrawFinishListener listener;
-    private String TAG=getClass().getSimpleName();
+    private String TAG = getClass().getSimpleName();
 
     public LockView(Context context) {
         super(context);
@@ -129,6 +130,14 @@ public class LockView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        VelocityTracker velocityTracker = VelocityTracker.obtain();
+        velocityTracker.addMovement(event);
+        velocityTracker.computeCurrentVelocity(1000);
+        float xVelocity = velocityTracker.getXVelocity();
+        float yVelocity = velocityTracker.getYVelocity();
+        LogUtil.show(TAG, "xV=" + xVelocity + " yV=" + yVelocity);
+        velocityTracker.clear();
+        velocityTracker.recycle();
         mouseX = event.getX();
         mouseY = event.getY();
         int[] p = getSelPoint();
