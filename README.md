@@ -261,6 +261,7 @@ LogUtil.show(TAG, "xV=" + xVelocity + " yV=" + yVelocity);
 velocityTracker.clear();
 velocityTracker.recycle();
 ```
+
 - GestureDetector
 ```java
 //解决长按屏幕后无法拖动的现象
@@ -274,7 +275,8 @@ public boolean onTouchEvent(MotionEvent event) {
 OnDoubleTapListener
 OnGestureListener
 ```
-- Scrooler
+
+- Scroller
 ```java
 //有过渡效果的滑动
 Scroller scroller = new Scroller(context);
