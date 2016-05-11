@@ -246,3 +246,5 @@ For custom components, I had not been systematic studying it , this repository w
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/rain.png)
 - 音量显示<br>
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/volume.png)
+- LockView<br>
+  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/lockview.png)
