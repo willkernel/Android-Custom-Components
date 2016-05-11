@@ -229,7 +229,7 @@ For custom components, I had not been systematic studying it , this repository w
 
 ###复合控件的例子
 
-在附带的SDK API的演示项目中，有两个例子列表 - 示例4和示例6  Views/Lists/ 展示了一个SpeechView继承自LinearLayout以显示语音引号中的。示例代码对应的类是List4.java和List6.java。
+在附带的SDK API的演示项目中，有两个例子列表 - 示例4和示例6  Views/Lists/ 展示了一个SpeechView继承自LinearLayout以显示语音。示例代码对应的类是List4.java和List6.java。
 
 
 ###修改已经存在的View类型
@@ -241,6 +241,10 @@ For custom components, I had not been systematic studying it , this repository w
 
 ###此仓库包含的示例程序
 - canvas的用法，自定义属性的用法<br>
-  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/customview.png)
+  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/customview.png)
 - 粒子效果之雨，学习极客学院的练习<br>
-  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/rain.png)
+  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/rain.png)
+- 音量显示<br>
+  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/volume.png)
+- LockView<br>
+  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/lockview.png)
