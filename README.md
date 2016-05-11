@@ -55,11 +55,11 @@ For custom components, I had not been systematic studying it , this repository w
 * ExpandableListView, and 21 others.
 
 ###基本方法
-下面是一个高度概括，当你开始创建自己的View组件时所需要知道的
+下面是一个高度概括，当你开始创建自己的View组件时所需要知道的<br>
 
 自定义类继承自View或者其subclass
-重写父类中以"on"前缀的方法，例如 onDraw()，onMeasure()和onkeydown()。这和重写Activity和ListActivity的生命周期方法有点类似
-使用你的新建子类。一旦完成，你的子类可以代替其他View
+重写父类中以"on"前缀的方法，例如 onDraw()，onMeasure()和onkeydown()。这和重写Activity和ListActivity的生命周期方法有点类似。
+一旦完成，你的子类可以代替其他View<br>
 提示：继承类可以被定义在Activity里面的内部类。因为它控制对它们的访问，但没有必要的（也许您要创建在应用程序中更广泛地使用的View）。
 
 ###完全定制的组件
@@ -86,7 +86,7 @@ For custom components, I had not been systematic studying it , this repository w
 在一个较高的水平，实现onMeasure()看起来是这样的：
 
 重写的onMeasure()方法通过宽度和高度的度量规范（widthMeasureSpec和heightMeasureSpec参数，无论是代表尺寸整数代码）被调用，它应被视为对应产生的宽度和高度测量值的限制的要求。一个完整的参考样的这些规范可以要求限制，可以在参考文档中[View.onMeasure(INT，INT)](http://www.android-doc.com/reference/android/view/View.html#onMeasure(int, int))
-组件的onMeasure（）方法应该计算出测量的宽度和高度，这将被用来呈现组件。它应尽量传入测量规范之内的值，尽管它可以选择超过他们（在这种情况下，父类可以选择处理，包括剪切，滚动，抛出一个异常，或要求onMeasure（）再次尝试，也许通过不同的测量规格[MeasureSpec](http://www.android-doc.com/reference/android/view/View.MeasureSpec.html)）。
+组件的onMeasure()方法应该计算出测量的宽度和高度，这将被用来呈现组件。它应尽量传入测量规范之内的值，尽管它可以选择超过他们（在这种情况下，父类可以选择处理，包括剪切，滚动，抛出一个异常，或要求onMeasure（）再次尝试，也许通过不同的测量规格[MeasureSpec](http://www.android-doc.com/reference/android/view/View.MeasureSpec.html)）。
 一旦宽度和高度被计算， setMeasuredDimension(int width, int height)方法必须与计算出的测量结果被调用。如果不这样做将导致抛出异常。
 
 
