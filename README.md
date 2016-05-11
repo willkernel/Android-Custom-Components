@@ -185,7 +185,14 @@ For custom components, I had not been systematic studying it , this repository w
            <td><code><code><a href="http://www.android-doc.com/reference/android/view/View.html#onWindowVisibilityChanged(int)">onWindowVisibilityChanged(int)</a></code></code></td>
            <td>当包含view的窗口可见性发生变化时调用.
            </td>
-       </tr>     
+       </tr>
+       
+       <tr>
+           <td><code><code><a href="http://www.android-doc.com/reference/android/view/View.html#onWindowVisibilityChanged(int)">ViewConfiguration.get(context).getScaledTouchSlop()</a></code></code></td>
+           <td>获取当前手机屏幕最小滑动距离，在frameworks/base/core/res/res/values/config.xml文件中.
+           </td>
+       </tr>
+       
        </tbody>
  </table>
 
@@ -239,6 +246,55 @@ For custom components, I had not been systematic studying it , this repository w
 
 如果你还没有这样做的话，导入记事本示例到Eclipse（或者只是看看提供的源码）。在[NoteEditor.java](http://www.android-doc.com/resources/samples/NotePad/src/com/example/android/notepad/NoteEditor.html)文件中的MyEditText。
 
+###基本知识点
+- VelocityTracker
+  ```java
+VelocityTracker velocityTracker = VelocityTracker.obtain();
+velocityTracker.addMovement(event);
+velocityTracker.computeCurrentVelocity(units);//1000ms
+/**
+*速度=(end-start)/units 可正可负
+*/
+float xVelocity = velocityTracker.getXVelocity();
+float yVelocity = velocityTracker.getYVelocity();
+LogUtil.show(TAG, "xV=" + xVelocity + " yV=" + yVelocity);
+velocityTracker.clear();
+velocityTracker.recycle();
+```
+- GestureDetector
+```java
+//解决长按屏幕后无法拖动的现象
+gestureDetector.setIsLongpressEnabled(false);
+
+public boolean onTouchEvent(MotionEvent event) {
+    LogUtil.show(TAG, "onTouchEvent()", Log.INFO);
+    return gestureDetector.onTouchEvent(event);
+}
+
+OnDoubleTapListener
+OnGestureListener
+```
+- Scrooler
+```java
+//有过渡效果的滑动
+Scroller scroller = new Scroller(context);
+
+private void smoothScrollTo(int desX, int desY) {
+    int scrollX = getScrollX();
+    int delta = desX - scrollX;
+    scroller.startScroll(scrollX, 0, desX, desY, 1000);
+    invalidate();
+}
+
+@Override
+public void computeScroll() {
+    super.computeScroll();
+    if (scroller.computeScrollOffset()) {
+        scrollTo(scroller.getCurrX(), scroller.getCurrY());
+        invalidate();
+    }
+}
+```
 ###此仓库包含的示例程序
 - canvas的用法，自定义属性的用法<br>
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/customview.png)
