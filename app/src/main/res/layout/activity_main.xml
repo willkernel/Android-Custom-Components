@@ -21,7 +21,12 @@
     <!--android:layout_height="match_parent"-->
     <!--android:background="@android:color/black" />-->
 
-    <com.willkernel.app.components.view.volume.VolumeView
+    <!--<com.willkernel.app.components.view.volume.VolumeView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+
+    <com.willkernel.app.components.view.lock.LockView
+        android:id="@+id/lockView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

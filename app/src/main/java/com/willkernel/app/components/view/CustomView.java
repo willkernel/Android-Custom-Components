@@ -41,7 +41,7 @@ public class CustomView extends View {
     private float radius;
     private float rx = -radius;
     private MyThread thread;
-    private boolean running=true;
+    private boolean running = true;
 
     public CustomView(Context context) {
         super(context);
@@ -137,7 +137,8 @@ public class CustomView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         LogUtil.show(TAG, "onTouchEvent()", Log.INFO);
-        return super.onTouchEvent(event);
+        return true;
+//        return super.onTouchEvent(event);
     }
 
     @Override
@@ -159,14 +160,14 @@ public class CustomView extends View {
 
     @Override
     protected void onDetachedFromWindow() {
-        LogUtil.show(TAG,"onDetachedFromWin");
-        running=false;
+        LogUtil.show(TAG, "onDetachedFromWin");
+        running = false;
         super.onDetachedFromWindow();
     }
 
-    private class MyThread extends Thread{
+    private class MyThread extends Thread {
         private long workTime;
-        private long delay=50;
+        private long delay = 50;
 
         @Override
         public void run() {
