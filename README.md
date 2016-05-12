@@ -429,9 +429,70 @@ if (scroller.computeScrollOffset()) {
   ```
   
 ###View事件分发机制
--  
+-  点击事件传递规则,伪代码
+```java
+   /**
+     * Pass the touch screen motion event down to the target view, or this
+     * view if it is the target.
+     *
+     * @param event The motion event to be dispatched.
+     * @return True if the event was handled by the view, false otherwise.
+     */
+    public boolean dispatchTouchEvent(MotionEvent event) {
+      ...
+    }
 
+    ViewGroup
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return false;
+    }
 
+    public boolean onTouchEvent(MotionEvent event){
+        ...
+        if(onClickListener!=null){
+          onClickListener.onClick();
+        }
+    }
+    
+    public void dispatchTouchEvent(MotionEvent ev){
+    boolean consume=false;
+    if(onInterceptTouchEvent(ev)){
+      consume=onTouchEvent(ev);
+    }else{
+      consume=child.dispatchTouchEvent(ev);
+    }
+    reture consume;
+    }
+    
+    //View的事件处理
+    if(onTouchListener!=null){
+      if(!onTouchListener.onTouch()){
+        onTouchEvent();
+      }
+    }
+
+Note:点击事件：Activity->Window->View , if(!view.onTouchEvent)->if(!parent.onTouchEvent)->...->Acrivity.onTouchEvent;
+1.一个事件序列，down->move...->up;
+2.一个事件序列只能被一个View拦截消耗，但可以通过其他手段将事件传递给其他View，在onTouchEvent()强行传递给其他view
+3.View没有这个onInterceptTouchEvent(),直接调用onTouchEvent(),默认返回true，除非它是不可点击.
+4.View的enable不影响onTouchEvent默认返回值，只要clickable||longClickable=true -> onTouchEvent()=true;
+5.事件传递由外向内，事件先传递给父元素，再由其传递给子元素，但是ActionDown事件除外.
+    
+    interface ViewParent
+    /**
+     * Called when a child does not want this parent and its ancestors to
+     * intercept touch events with
+     * {@link ViewGroup#onInterceptTouchEvent(MotionEvent)}.
+     *
+     * <p>This parent should pass this call onto its parents. This parent must obey
+     * this request for the duration of the touch (that is, only clear the flag
+     * after this parent has received an up or a cancel.</p>
+     * 
+     * @param disallowIntercept True if the child does not want the parent to
+     *            intercept touch events.
+     */
+    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept);
+```
 ###此仓库包含的示例程序
 - canvas的用法，自定义属性的用法<br>
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/customview.png)
