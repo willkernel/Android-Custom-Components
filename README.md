@@ -564,16 +564,81 @@ public boolean dispatchTouchEvent(MotionEvent ev){
 ```
 - View的滑动冲突
   - 外部滑动方向和内部滑动方向不一致
-  ViewPager和Fragment+ListView的场景，ViewPager默认做了滑动冲突的处理，如果是ScrollView就必须手动处理
-  处理规则：根据滑动的方向(多种判读方法，水平和竖直方向的距离大小)，判断由谁来拦截事件
-解决方法
+    ViewPager和Fragment+ListView的场景，ViewPager默认做了滑动冲突的处理，如果是ScrollView就必须手动处理<br>
+    处理规则：根据滑动的方向(多种判读方法，水平和竖直方向的距离大小)，判断由谁来拦截事件<br>
+    解决方法：
+    1.外部拦截法，父容器需要此事件就拦截，不需要就不拦截,重写父类的onInterceptTouchEvent,推荐采用这种
+    ```java
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        boolean intercepted=false;
+        int x=(int)event.getX();
+        int y=(int)event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                intercepted=false;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if(父容器需要此事件){
+                  return true;
+                }else{
+                  return false;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                intercepted=false;
+                break;
+        }
+        mLastX = x;
+        mLastY = y;
+        return intercepted;
+    }
+    ```
+    2.内部拦截法，重写子元素的onInterceptTouchEvent
+    ```java
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        int x=(int)event.getX();
+        int y=(int)event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                parent.requestDisallowInterceptTouchEvent(true);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                int dX=x-mLastX;
+                int dY=y-mLastY;
+                
+                if(父容器需要此事件){
+                  parent.requestDisallowInterceptTouchEvent(false);
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+        }
+        mLastX = x;
+        mLastY = y;
+        return super.onInterceptTouchEvent(event);
+    }
+    ```
+      父元素所做的修改
+  ```java
+  public boolean onInterceptTouchEvent(MotionEvent ev){
+    int action=event.getAction();
+    if(action==MotionEvent.ACTION_DOWN){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  ```
   - 外部滑动方向和内部滑动方向一致
-  ScrollView+ListView，同方向滑动
-  处理规则：根据业务需求做出相应的处理
+    ScrollView+ListView，同方向滑动<br>
+    处理规则：根据业务需求做出相应的处理，详细的内容后续添加<br>
   - 两种情况的嵌套
-  SlidingMenu+ViewPager+ListView
+    SlidingMenu+ViewPager+ListView<br>
+    处理规则：根据业务需求做出相应的处理，详细的内容后续添加<br>
 
-
+###View的工作原理
+- ViewRoot DecorView
+  
 ###此仓库包含的示例程序
 - canvas的用法，自定义属性的用法<br>
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/customview.png)
