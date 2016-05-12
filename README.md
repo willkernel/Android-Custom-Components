@@ -300,12 +300,62 @@ public void computeScroll() {
 ```
 
 - View滑动三种方式
-```java
+  - scrollTo/scrollBy
+  ```java
+  /**
+     * Set the scrolled position of your view. This will cause a call to
+     * {@link #onScrollChanged(int, int, int, int)} and the view will be
+     * invalidated.
+     * @param x the x position to scroll to
+     * @param y the y position to scroll to
+     */
+    public void scrollTo(int x, int y) {
+        if (mScrollX != x || mScrollY != y) {
+            int oldX = mScrollX;
+            int oldY = mScrollY;
+            mScrollX = x;
+            mScrollY = y;
+            invalidateParentCaches();
+            onScrollChanged(mScrollX, mScrollY, oldX, oldY);
+            if (!awakenScrollBars()) {
+                postInvalidateOnAnimation();
+            }
+        }
+    }
 
-```
+    /**
+     * Move the scrolled position of your view. This will cause a call to
+     * {@link #onScrollChanged(int, int, int, int)} and the view will be
+     * invalidated.
+     * @param x the amount of pixels to scroll by horizontally
+     * @param y the amount of pixels to scroll by vertically
+     */
+    public void scrollBy(int x, int y) {
+        scrollTo(mScrollX + x, mScrollY + y);
+    }
+    Note:这种方式的滑动，只对View的内容进行滑动，View本身不滑动，另外，mScollX,mScrollY是View的左上边缘相对于内容的左上边缘的滑动距离，当从左向右滑动时，mScollX<0,当从右向左滑动时，mScollY>0;当从上向下滑动时，mScrollY<0,当从下向上滑动时，mScrollY>0.
+  ```
+  - TweenAnimation/PropertyAnimator
+  ```java
+    TranslateAnimation(float fromXDelta, float toXDelta, float fromYDelta, float toYDelta)
+    
+    ObjectAnimator.ofFloat(Object target, String propertyName, float... values).setDuration(long duration).start();
+    
+    Note:TweenAnimation并不能改变View的位置参数，这时新位置的点击事件无效，PropertyAnimator可以解决这个问题，但是nineoldandroids动画兼容库在3.0之前的版本，本质上是TweenAnimation
+  ```
+  - LayoutParams
+  ```java
+    MarginLayoutParams params=(MarginLayoutParams)view.getLayoutParams():
+    params.width+=100;
+    params.leftMargin+=100;
+    view.requesLayout();
+    //view.setLayoutParams(params);
+  ```
 ###此仓库包含的示例程序
 - canvas的用法，自定义属性的用法<br>
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/customview.png)
+- CustomLayout,可拖拽Layout,以及改变布局参数<br>
+  ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/customlayout.png)
 - 粒子效果之雨，学习极客学院的练习<br>
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/rain.png)
 - 音量显示<br>
