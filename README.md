@@ -619,16 +619,16 @@ public boolean dispatchTouchEvent(MotionEvent ev){
     }
     ```
       父元素所做的修改
-  ```java
-  public boolean onInterceptTouchEvent(MotionEvent ev){
-    int action=event.getAction();
-    if(action==MotionEvent.ACTION_DOWN){
-      return false;
-    }else{
-      return true;
+    ```java
+    public boolean onInterceptTouchEvent(MotionEvent ev){
+      int action=event.getAction();
+      if(action==MotionEvent.ACTION_DOWN){
+        return false;
+      }else{
+        return true;
+      }
     }
-  }
-  ```
+    ```
   - 外部滑动方向和内部滑动方向一致
     ScrollView+ListView，同方向滑动<br>
     处理规则：根据业务需求做出相应的处理，详细的内容后续添加<br>
@@ -636,8 +636,20 @@ public boolean dispatchTouchEvent(MotionEvent ev){
     SlidingMenu+ViewPager+ListView<br>
     处理规则：根据业务需求做出相应的处理，详细的内容后续添加<br>
 
-###View的工作原理
-- ViewRoot DecorView
+###View的工作原理(掌握三大流measure , layout ,draw 程以及常用回调方法)
+- ViewRoot , DecorView
+  ViewRoot对应于ViewRootImpl是连接WindowManager和DecorView的纽带，三大流程均是通过ViewRoot完成
+  Activity创建完后会将DecorView添加到Window中，同时会创建ViewRootImpl，并将两者建立关联
+  ```java
+    root=new ViewRootImpl(view.getContext(),display);
+    root.setView(view,wparams,panelParentView);
+    
+    performTraversals()
+    ViewGroup
+    - root.performMeasure()->root.measure()->root.onMeasure()->View#measure
+    - root.performLayout()->root.layout()->root.onLayout()->View#layout
+    - root.performDraw()->root.draw()->root.onDraw()->View#draw
+  ```
   
 ###此仓库包含的示例程序
 - canvas的用法，自定义属性的用法<br>
