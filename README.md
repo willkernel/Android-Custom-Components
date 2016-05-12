@@ -493,6 +493,87 @@ Note:点击事件：Activity->Window->View , if(!view.onTouchEvent)->if(!parent.
      */
     public void requestDisallowInterceptTouchEvent(boolean disallowIntercept);
 ```
+
+- 事件分发源码分析
+```java
+Activity#dispatchTouchEvent()
+/**
+ * Called to process touch screen events.  You can override this to
+ * intercept all touch screen events before they are dispatched to the
+ * window.  Be sure to call this implementation for touch screen events
+ * that should be handled normally.
+ *
+ * @param ev The touch screen event.
+ *
+ * @return boolean Return true if this event was consumed.
+ */
+public boolean dispatchTouchEvent(MotionEvent ev) {
+    if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+        onUserInteraction();
+    }
+    if (getWindow().superDispatchTouchEvent(ev)) {
+        return true;//事件处理结束
+    }
+    return onTouchEvent(ev);//当所有子元素没有做事件处理的时候调用onTouchEvent(ev);
+}
+
+PhoneWindow#superDispatchTouchEvent()
+@Override
+public boolean superDispatchTouchEvent(MotionEvent event) {
+    return mDecor.superDispatchTouchEvent(event);
+}
+
+`private final class DecorView extends FrameLayout implements RootViewSurfaceTaker`
+DecorView#superDispatchTouchEvent()
+public boolean superDispatchTouchEvent(MotionEvent event) {
+    return super.dispatchTouchEvent(event);
+}
+
+((ViewGroup)getWindow().getDecorView().findViewById(android.R.id.content)).getChildAt(0)获取Activity设置的View，由于DecorView extends FrameLayout(ViewGroup),事件传递给
+ViewGroup#dispatchTouchEvent()
+@Override
+public boolean dispatchTouchEvent(MotionEvent ev){
+  // Handle an initial down.
+  if (actionMasked == MotionEvent.ACTION_DOWN) {
+      // Throw away all previous state when starting a new touch gesture.
+      // The framework may have dropped the up or cancel event for the previous gesture
+      // due to an app switch, ANR, or some other state change.
+      cancelAndClearTouchTargets(ev);
+      resetTouchState();
+  }
+
+  // Check for interception.
+  final boolean intercepted;
+  if (actionMasked == MotionEvent.ACTION_DOWN
+          || mFirstTouchTarget != null) {
+      final boolean disallowIntercept = (mGroupFlags & FLAG_DISALLOW_INTERCEPT) != 0;
+      if (!disallowIntercept) {
+          intercepted = onInterceptTouchEvent(ev);
+          ev.setAction(action); // restore action in case it was changed
+      } else {
+          intercepted = false;
+      }
+  } else {
+      // There are no touch targets and this action is not an initial down
+      // so this view group continues to intercept touches.
+      intercepted = true;
+  }
+}
+顶级View也叫根View，顶级View一般来说都是ViewGroup.FLAG_DISALLOW_INTERCEPT 可以通过这个标志位处理滑动冲突的问题
+当ViewGroup不拦截事件，事件会向下传递给子view
+```
+- View的滑动冲突
+  - 外部滑动方向和内部滑动方向不一致
+  ViewPager和Fragment+ListView的场景，ViewPager默认做了滑动冲突的处理，如果是ScrollView就必须手动处理
+  处理规则：根据滑动的方向(多种判读方法，水平和竖直方向的距离大小)，判断由谁来拦截事件
+解决方法
+  - 外部滑动方向和内部滑动方向一致
+  ScrollView+ListView，同方向滑动
+  处理规则：根据业务需求做出相应的处理
+  - 两种情况的嵌套
+  SlidingMenu+ViewPager+ListView
+
+
 ###此仓库包含的示例程序
 - canvas的用法，自定义属性的用法<br>
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/customview.png)
