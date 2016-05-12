@@ -455,13 +455,13 @@ if (scroller.computeScrollOffset()) {
     }
     
     public void dispatchTouchEvent(MotionEvent ev){
-    boolean consume=false;
-    if(onInterceptTouchEvent(ev)){
-      consume=onTouchEvent(ev);
-    }else{
-      consume=child.dispatchTouchEvent(ev);
-    }
-    reture consume;
+      boolean consume=false;
+      if(onInterceptTouchEvent(ev)){
+        consume=onTouchEvent(ev);
+      }else{
+        consume=child.dispatchTouchEvent(ev);
+      }
+      reture consume;
     }
     
     //View的事件处理
@@ -476,7 +476,7 @@ Note:点击事件：Activity->Window->View , if(!view.onTouchEvent)->if(!parent.
 2.一个事件序列只能被一个View拦截消耗，但可以通过其他手段将事件传递给其他View，在onTouchEvent()强行传递给其他view
 3.View没有这个onInterceptTouchEvent(),直接调用onTouchEvent(),默认返回true，除非它是不可点击.
 4.View的enable不影响onTouchEvent默认返回值，只要clickable||longClickable=true -> onTouchEvent()=true;
-5.事件传递由外向内，事件先传递给父元素，再由其传递给子元素，但是ActionDown事件除外.
+5.事件传递由外向内，事件先传递给父元素，再由其传递给子元素，requestDisallowInterceptTouchEvent可以干预父元素的事件分发但是ActionDown事件除外.
     
     interface ViewParent
     /**
