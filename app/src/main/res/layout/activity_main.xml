@@ -25,9 +25,22 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent" />-->
 
-    <com.willkernel.app.components.view.lock.LockView
-    android:id="@+id/lockView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    <!--<com.willkernel.app.components.view.lock.LockView-->
+    <!--android:id="@+id/lockView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+
+    <com.willkernel.app.components.view.CustomLayout
+        android:id="@+id/custom_Layout"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@android:color/holo_red_dark">
+
+        <ImageView
+            android:id="@+id/iv_CustomLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher" />
+    </com.willkernel.app.components.view.CustomLayout>
 
 </FrameLayout>

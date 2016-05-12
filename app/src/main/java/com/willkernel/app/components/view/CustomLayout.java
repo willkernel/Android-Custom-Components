@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 
+import com.nineoldandroids.view.ViewHelper;
 import com.willkernel.app.components.utils.LogUtil;
 
 /**
@@ -20,6 +21,7 @@ import com.willkernel.app.components.utils.LogUtil;
 @SuppressWarnings("unused")
 public class CustomLayout extends LinearLayout {
     private final String TAG = getClass().getSimpleName();
+    private float mLastX, mLastY;
 
     public CustomLayout(Context context) {
         super(context);
@@ -57,7 +59,23 @@ public class CustomLayout extends LinearLayout {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         LogUtil.show(TAG, "onTouchEvent()", Log.INFO);
-        return super.onTouchEvent(event);
+        float x = event.getRawX();
+        float y = event.getRawY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float dX = x - mLastX;
+                float dY = y - mLastY;
+                float translationX = ViewHelper.getTranslationX(this) + dX;
+                float translationY = ViewHelper.getTranslationY(this) + dY;
+                ViewHelper.setTranslationX(this, translationX);
+                ViewHelper.setTranslationY(this, translationY);
+                break;
+        }
+        mLastX = x;
+        mLastY = y;
+        return true;
     }
 
     @Override
