@@ -637,9 +637,9 @@ public boolean dispatchTouchEvent(MotionEvent ev){
     处理规则：根据业务需求做出相应的处理，详细的内容后续添加<br>
 
 ###View的工作原理(掌握三大流measure , layout ,draw 程以及常用回调方法)
-- ViewRoot , DecorView
-  ViewRoot对应于ViewRootImpl是连接WindowManager和DecorView的纽带，三大流程均是通过ViewRoot完成
-  Activity创建完后会将DecorView添加到Window中，同时会创建ViewRootImpl，并将两者建立关联
+- ViewRoot , DecorView<br>
+  ViewRoot对应于ViewRootImpl是连接WindowManager和DecorView的纽带，三大流程均是通过ViewRoot完成<br>
+  Activity创建完后会将DecorView添加到Window中，同时会创建ViewRootImpl，并将两者建立关联<br>
   ```java
     root=new ViewRootImpl(view.getContext(),display);
     root.setView(view,wparams,panelParentView);
