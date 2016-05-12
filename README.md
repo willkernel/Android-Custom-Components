@@ -285,10 +285,9 @@ Scroller scroller = new Scroller(context);
 private void smoothScrollTo(int desX, int desY) {
     int scrollX = getScrollX();
     int delta = desX - scrollX;
-    scroller.startScroll(scrollX, 0, desX, desY, 1000);
-    invalidate();
+    scroller.startScroll(scrollX, 0, desX, desY, 1000);//没有进行滑动操作
+    invalidate();//View重绘
 }
-
 @Override
 public void computeScroll() {
     super.computeScroll();
@@ -297,6 +296,83 @@ public void computeScroll() {
         invalidate();
     }
 }
+
+View
+/**
+   * Called by a parent to request that a child update its values for mScrollX
+   * and mScrollY if necessary. This will typically be done if the child is
+   * animating a scroll using a {@link android.widget.Scroller Scroller}
+   * object.
+   */
+public void computeScroll() {
+}
+
+Scoller
+/**
+ * Call this when you want to know the new location.  If it returns true,
+ * the animation is not yet finished.
+ */ 
+public boolean computeScrollOffset() {
+    if (mFinished) {
+        return false;
+    }
+
+    int timePassed = (int)(AnimationUtils.currentAnimationTimeMillis() - mStartTime);
+
+    if (timePassed < mDuration) {
+        switch (mMode) {
+        case SCROLL_MODE:
+        //滑动的时间，计算出滑动的距离，根据起始位置，计算出当前的位置
+            final float x = mInterpolator.getInterpolation(timePassed * mDurationReciprocal);
+            mCurrX = mStartX + Math.round(x * mDeltaX);
+            mCurrY = mStartY + Math.round(x * mDeltaY);
+            break;
+        case FLING_MODE:
+            final float t = (float) timePassed / mDuration;
+            final int index = (int) (NB_SAMPLES * t);
+            float distanceCoef = 1.f;
+            float velocityCoef = 0.f;
+            if (index < NB_SAMPLES) {
+                final float t_inf = (float) index / NB_SAMPLES;
+                final float t_sup = (float) (index + 1) / NB_SAMPLES;
+                final float d_inf = SPLINE_POSITION[index];
+                final float d_sup = SPLINE_POSITION[index + 1];
+                velocityCoef = (d_sup - d_inf) / (t_sup - t_inf);
+                distanceCoef = d_inf + (t - t_inf) * velocityCoef;
+            }
+
+            mCurrVelocity = velocityCoef * mDistance / mDuration * 1000.0f;
+            
+            mCurrX = mStartX + Math.round(distanceCoef * (mFinalX - mStartX));
+            // Pin to mMinX <= mCurrX <= mMaxX
+            mCurrX = Math.min(mCurrX, mMaxX);
+            mCurrX = Math.max(mCurrX, mMinX);
+            
+            mCurrY = mStartY + Math.round(distanceCoef * (mFinalY - mStartY));
+            // Pin to mMinY <= mCurrY <= mMaxY
+            mCurrY = Math.min(mCurrY, mMaxY);
+            mCurrY = Math.max(mCurrY, mMinY);
+
+            if (mCurrX == mFinalX && mCurrY == mFinalY) {
+                mFinished = true;
+            }
+
+            break;
+        }
+    }
+    else {
+        mCurrX = mFinalX;
+        mCurrY = mFinalY;
+        mFinished = true;
+    }
+    return true;
+}
+Note:Scroller并不能实现View的滑动，需要配合View的computeScroll，通过滑动的时间，得到滑动的位置，通过scrollTo完成滑动，View的每次重绘都会调用computeScrollOffset
+if (scroller.computeScrollOffset()) {
+    scrollTo(scroller.getCurrX(), scroller.getCurrY());
+    invalidate();
+}
+如果没有完成滑动，继续进行滑动
 ```
 
 - View滑动三种方式
