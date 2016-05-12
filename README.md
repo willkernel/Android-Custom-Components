@@ -427,6 +427,11 @@ if (scroller.computeScrollOffset()) {
     view.requesLayout();
     //view.setLayoutParams(params);
   ```
+  
+###View事件分发机制
+-  
+
+
 ###此仓库包含的示例程序
 - canvas的用法，自定义属性的用法<br>
   ![img](https://github.com/willkernel/Android-Custom-Components/blob/master/pngfiles/customview.png)
